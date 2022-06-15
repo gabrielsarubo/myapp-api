@@ -20,18 +20,25 @@ module.exports = {
 
     register: async function(admin, nome, email, senha) {
         console.log("dados : ",admin, nome, email, senha)
-        bd.collection("users").add({
+        let sucesso;
+        await bd.collection("users").add({
             admin: admin,
             nome: nome,
             email: email,
             senha: senha
         })
         .then(() => {
-            return true
+            console.log("sucesso do cadastro no banco de dados")
+            sucesso = true
         })
         .catch((error) => {
             console.log(error)
-            return false
         });
+
+        if(sucesso == true) {
+            return true
+        }
+
+        return false
     }
 }

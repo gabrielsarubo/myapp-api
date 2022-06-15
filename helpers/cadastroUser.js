@@ -3,10 +3,8 @@ const NovoUsuario = require('../models/NovaUsuario')
 module.exports = {
     cadastro: async function(req, res) {
         let {admin, nome, email, senha} = req.body
-        console.log(email)
 
         let confirm = await NovoUsuario.notExistEmail(email);
-        console.log(confirm)
         let registerSucess = await NovoUsuario.register(admin, nome, email, senha);
 
         if(!confirm) {
