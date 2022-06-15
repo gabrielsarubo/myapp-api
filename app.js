@@ -31,8 +31,10 @@ app.use(passport.session())
 // Rotas
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var cadastrarUserRouter = require('./routes/cadastrarUser');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/register', cadastrarUserRouter);
 
 module.exports = app;

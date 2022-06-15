@@ -1,9 +1,6 @@
 const Usuario = require('../models/Usuario')
 const jwt = require("jsonwebtoken")
 
-const firebase = require('../config/firebase')
-const bd = firebase.default.firestore();
-
 module.exports = {
     login: async function(req, res) {
         let {email, senha} = req.body
