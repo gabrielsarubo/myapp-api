@@ -1,21 +1,62 @@
 const firebase = require('../../config/firebase')
 const db = firebase.default.firestore()
 
-const createUserReport = async (req, res) => {
+const createReport = async (req, res) => {
   const { userEmail } = req.params
 
   try {
     const userHistory = await _getUserHistoryAsync(userEmail)
     const answeredQuestions = await _bundleQuestionsAsync(userHistory)
-    
-    console.log(userHistory)
-    console.log(answeredQuestions)
-    
-    res.end()
+
+    // Create user full report
+    const fullUserReport = _createFullUserReport(userHistory, answeredQuestions)
+
+    res.json(fullUserReport)
   } catch (error) {
     // console.error(error)
     res.status(400).send('Error on trying to recover history from user')
   }
+}
+
+/**
+ * Criar um relatorio completo
+ * 
+ * @param {Array} history histórico do usuario
+ * @param {Object} questions uma lista com a copia das questoes respondidas pelo usuario
+ * @returns um Array com o relatorio completo do usuario
+ */
+const _createFullUserReport = (history, questions) => {
+  /**
+   * @example reportEntry: {
+   *  category: 'enPt',
+   *  question: { text: 'the horse goes to the bank', level: 'hard' },
+   *  userAnswer: 'o cavalo vai ao banco',
+   *  isAnswerCorrect: true
+   * }
+   * @example fullReport: [ {reportEntry}, {...} ]
+   */
+  const fullReport = []
+
+  // Percorrer o historico do usuario
+  history.forEach(entry => {
+    const reportEntry = {
+      category: entry.categoryId,
+      userAnswer: entry.userAnswer,
+      isAnswerCorrect: entry.isAnswerCorrect,
+      question: {},
+    }
+
+    // Recover the original question infos based on the question id
+    const originalQuestion = questions[entry.categoryId.toString()][entry.questionId]
+    reportEntry.question = {
+      text: originalQuestion.palavra,
+      level: originalQuestion.dificuldade,
+    }
+
+    fullReport.push(reportEntry)
+  })
+
+  return fullReport
 }
 
 /**
@@ -92,8 +133,8 @@ const _bundleQuestionsAsync = async (userHistory) => {
   }
 
   try {
-    questions.enPt = await _getQuestionsFromCollectionAsync(userHistory, 'en-pt')
-    questions.ptEn = await _getQuestionsFromCollectionAsync(userHistory, 'pt-en')
+    questions.enPt = await _getQuestionsFromCollectionAsync(userHistory, 'enPt')
+    questions.ptEn = await _getQuestionsFromCollectionAsync(userHistory, 'ptEn')
     questions.classeGramatical = await _getQuestionsFromCollectionAsync(userHistory, 'classeGramatical')
 
     return questions
@@ -102,4 +143,4 @@ const _bundleQuestionsAsync = async (userHistory) => {
   }
 }
 
-module.exports = createUserReport
+module.exports = createReport
