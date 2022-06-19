@@ -1,4 +1,4 @@
-const firebase = require('../config/firebase')
+const firebase = require('../../config/firebase')
 const bd = firebase.default.firestore();
 
 const classeGramatical = function (req, res, next) {

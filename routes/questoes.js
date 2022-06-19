@@ -1,8 +1,8 @@
 var express = require('express');
 const router = express.Router();
 
-const classeGramatical = require('../geradorDeQuestoes/classeGramatical');
-const traducao = require('../geradorDeQuestoes/traducao');
+const classeGramatical = require('../middlewares/geradorDeQuestoes/classeGramatical');
+const traducao = require('../middlewares/geradorDeQuestoes/traducao');
 
 router.get('/classeGramatical', function(req, res, next) {
   classeGramatical(req, res, next);

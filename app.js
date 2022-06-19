@@ -39,13 +39,14 @@ var cadastrarUserRouter = require('./routes/cadastrarUser');
 var questoes = require('./routes/questoes');
 
 app.use('/users', usersRouter);
-app.use('/history', historyRouter)
-app.use('/report', reportRouter)
 app.use('/register', cadastrarUserRouter);
+app.use('/', indexRouter);
 
 //Rotas com auth
 var acesso = require('./helpers/acessoApi')
 app.use(acesso.validateJwt);
 app.use('/questao', questoes);
+app.use('/history', historyRouter)
+app.use('/report', reportRouter)
 
 module.exports = app;
