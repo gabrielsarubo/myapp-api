@@ -14,7 +14,6 @@ const traducao = function (req, res, next) {
             const alt = perguntas;
             const respostas = alt.filter(item => item.data.resposta.includes(pergunta.data.resposta) !== true);
             const opcoes = gerarNumeros(docs.size-1);
-            console.log(opcoes)
             const final = {
                 id: pergunta.id,
                 palavra: pergunta.data.palavra,
