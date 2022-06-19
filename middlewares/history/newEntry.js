@@ -24,7 +24,7 @@ const newEntry = async (req, res) => {
   // Create a new history entry object to be sent to the DB
   const historyEntry = {
     categoryId,
-    questionRef: db.doc(`${categoryId}/${questionId}`),
+    questionId,
     userEmail,
     userAnswer,
     isAnswerCorrect
