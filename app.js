@@ -3,6 +3,7 @@ var path = require('path');
 require("dotenv").config();
 var logger = require('morgan');
 var express = require('express');
+var cookieParser =  require('cookie-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -13,11 +14,9 @@ var app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Cookies
-var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 //Sessão
@@ -37,11 +36,16 @@ app.use(passport.session())
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var cadastrarUserRouter = require('./routes/cadastrarUser');
+var questoes = require('./routes/questoes');
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/history', historyRouter)
 app.use('/report', reportRouter)
 app.use('/register', cadastrarUserRouter);
+
+//Rotas com auth
+var acesso = require('./helpers/acessoApi')
+app.use(acesso.validateJwt);
+app.use('/questao', questoes);
 
 module.exports = app;
