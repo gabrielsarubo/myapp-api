@@ -2,9 +2,13 @@
 var path = require('path');
 require("dotenv").config();
 var logger = require('morgan');
-
-// Express
 var express = require('express');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var historyRouter = require('./routes/history')
+const reportRouter = require('./routes/report')
+
 var app = express();
 app.use(logger('dev'));
 app.use(express.json());
@@ -36,6 +40,8 @@ var cadastrarUserRouter = require('./routes/cadastrarUser');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/history', historyRouter)
+app.use('/report', reportRouter)
 app.use('/register', cadastrarUserRouter);
 
 module.exports = app;
