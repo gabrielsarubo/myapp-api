@@ -9,5 +9,6 @@ router.get("/", (req, res) => {
 })
 
 router.post("/user", CadastroUser.cadastro)
+router.post("/updateUser", CadastroUser.update)
 
 module.exports = router;

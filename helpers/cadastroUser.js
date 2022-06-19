@@ -27,5 +27,17 @@ module.exports = {
         }
         res.json({sucess:true})
     },
+    update: async function(req, res) {
+        let {id, nome, senha} = req.body
+        if (!nome && !senha) {
+            return res.status(400).send("Insira o nome ou a senha");
+        }
+        let confirm = await NovoUsuario.updateUser(id, nome, senha)
+
+        if(!confirm) {
+            return res.status(400).send("Erro na alteracao dos dados");
+        }
+        res.json({sucess:true})
+    }
 
 }
