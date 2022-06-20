@@ -13,7 +13,12 @@ module.exports = {
             })
         if (!!datas.length != 0) {
             if (email == datas[0].data.email && senha == datas[0].data.senha) {
-                return { dados: datas[0].id, email: datas[0].data.email, nome: datas[0].data.nome }
+                return {
+                    dados: datas[0].id,
+                    isAdmin: datas[0].data.admin,
+                    email: datas[0].data.email,
+                    nome: datas[0].data.nome
+                }
             }
         }
         return null;
@@ -28,7 +33,12 @@ module.exports = {
             }).catch((error) => {
                 console.log(error);
             })
-        return { dados: datas[0].id, email: datas[0].data.email, nome: datas[0].data.nome }
+        return {
+            dados: datas[0].id,
+            isAdmin: datas[0].data.admin,
+            email: datas[0].data.email,
+            nome: datas[0].data.nome
+        }
     },
 
     confirmAdmin: async function (usuario) {
