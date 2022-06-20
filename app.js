@@ -1,8 +1,10 @@
-// Geral
-var path = require('path');
 require("dotenv").config();
+
+// Geral
+const express = require('express');
+const cors = require('cors')
+var path = require('path');
 var logger = require('morgan');
-var express = require('express');
 var cookieParser =  require('cookie-parser');
 
 var indexRouter = require('./routes/index');
@@ -10,7 +12,9 @@ var usersRouter = require('./routes/users');
 var historyRouter = require('./routes/history')
 const reportRouter = require('./routes/report')
 
-var app = express();
+const app = express();
+
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,4 +53,6 @@ app.use('/questao', questoes);
 app.use('/history', historyRouter)
 app.use('/report', reportRouter)
 
-module.exports = app;
+app.listen(process.env.PORT || 5000)
+
+// module.exports = app;
