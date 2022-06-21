@@ -4,7 +4,7 @@ const router = express.Router();
 // Middlewares
 const createReport = require('../middlewares/report/createReport')
 
-router.get('/', (req, res) => {
+router.get('/:userEmail', (req, res) => {
   createReport(req, res)
 })
 

@@ -2,7 +2,7 @@ const firebase = require('../../config/firebase')
 const db = firebase.default.firestore()
 
 const createReport = async (req, res) => {
-  const { userEmail } = req.body
+  const { userEmail } = req.params
 
   try {
     const userHistory = await _getUserHistoryAsync(userEmail)
