@@ -2,11 +2,13 @@ const firebase = require('../../config/firebase')
 const bd = firebase.default.firestore();
 
 const classeGramatical = function (req, res, next) {
-    bd.collection('classeGramatical').where('dificuldade', '==', `${req.body.dificuldade}`)
+    const { colecao, dificuldade } = req.body
+
+    bd.collection(colecao).where('dificuldade', '==', dificuldade)
         .get()
         .then((docs) => {
             const perguntas = [];
-            docs.forEach((doc) => { perguntas.push({data: doc.data(), id: doc.id}) });
+            docs.forEach((doc) => { perguntas.push({ data: doc.data(), id: doc.id }) });
 
             const id = Math.floor(Math.random() * docs.size);
             const pergunta = perguntas[id]
