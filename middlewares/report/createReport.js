@@ -1,9 +1,13 @@
 const firebase = require('../../config/firebase')
 const db = firebase.default.firestore()
 
-const createReport = async (req, res) => {
-  const { userEmail } = req.params
-
+/**
+ * Criar um relatorio completo de um usuario
+ * 
+ * @param {*} userEmail ID do usuario no banco de dados
+ * @returns um Array com o relatorio completo do usuario
+ */
+const createReport = async (userEmail) => {
   try {
     const userHistory = await _getUserHistoryAsync(userEmail)
     const answeredQuestions = await _bundleQuestionsAsync(userHistory)
@@ -11,10 +15,10 @@ const createReport = async (req, res) => {
     // Create user full report
     const fullUserReport = _createFullUserReport(userHistory, answeredQuestions)
 
-    res.json(fullUserReport)
+    return fullUserReport
   } catch (error) {
     // console.error(error)
-    res.status(400).send('Error on trying to recover history from user')
+    throw new Error('Error when creating user full report')
   }
 }
 
