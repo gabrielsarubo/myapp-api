@@ -52,7 +52,7 @@ module.exports = {
             })
 
         let admin = datas[0].data.admin
-        return admin == true
+        return admin == 'true'
     },
 
 }
