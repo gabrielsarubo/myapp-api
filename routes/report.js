@@ -5,6 +5,8 @@ const router = express.Router();
 const createReport = require('../middlewares/report/createReport')
 const createPerformanceReport = require('../middlewares/report/createPerformanceReport');
 
+const Acesso = require('../helpers/acessoApi');
+
 router.get('/:userEmail', async (req, res) => {
   const { userEmail } = req.params
 
@@ -24,7 +26,7 @@ router.get('/:userEmail', async (req, res) => {
  * 
  * Responde com um objeto contendo um relatorio com o desempenho de ambos os usuarios
  */
-router.get('/:userA/:userB', async (req, res) => {
+router.get('/:userA/:userB', Acesso.isAdmin, async (req, res) => {
   const { userA, userB } = req.params
   
   try {
