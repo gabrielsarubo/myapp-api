@@ -45,9 +45,19 @@ module.exports = {
     },
     update: async function(req, res) {
         let {id, nome, senha} = req.body
+
         if (!nome && !senha) {
-            return res.status(400).send("Insira o nome ou a senha");
+            return res.status(400).send("Nenhum dado inserido, preencha todos os campos");
         }
+
+        if (!nome) {
+            return res.status(400).send("Insira um nome");
+        }
+
+        if (!senha) {
+            return res.status(400).send("Insira uma senha");
+        }
+
         let confirm = await NovoUsuario.updateUser(id, nome, senha)
 
         if(!confirm) {
