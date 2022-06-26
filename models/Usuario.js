@@ -55,4 +55,10 @@ module.exports = {
         return admin == true
     },
 
+    isValidEmail(email){
+        var regex = new RegExp('^[\\w+.]+@[\\w]+\\.(?:\\w{2,})(?:\\.\\w{2})?$');
+        console.log(regex.test(email))
+        return regex.test(email);
+    }
+
 }

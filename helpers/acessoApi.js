@@ -19,6 +19,10 @@ module.exports = {
             return res.status(400).send("Insira uma senha");
         }
 
+        if (!!email && !!senha && Usuario.isValidEmail(email) === false) {
+            return res.status(400).send("Formato de email inválido")
+        }
+
         if (!!email) {
             usuario = await Usuario.getByLogin(email, senha)
         }
