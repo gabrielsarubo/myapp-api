@@ -1,4 +1,5 @@
 const NovoUsuario = require('../models/NovaUsuario')
+const Usuario = require('../models/Usuario')
 
 module.exports = {
     cadastro: async function(req, res) {
@@ -6,6 +7,12 @@ module.exports = {
         if (!admin) {
             return res.status(400).send("Insira a flag admin");
         }
+
+        if (!!admin && (admin !== "true" && admin !== "false")) {
+            console.log("type : ", typeof admin)
+            return res.status(400).send("Flag admin deve ser um booleano")
+        }
+
         if (!nome) {
             return res.status(400).send("Insira o nome");
         }
@@ -15,6 +22,11 @@ module.exports = {
         if (!senha) {
             return res.status(400).send("Insira a senha");
         }
+
+        if (!!email && Usuario.isValidEmail(email) === false) {
+            return res.status(400).send("Formato de email inválido")
+        }
+
         let confirm = await NovoUsuario.notExistEmail(email);
         let registerSucess = await NovoUsuario.register(admin, nome, email, senha);
 
