@@ -44,7 +44,7 @@ var questoes = require('./routes/questoes');
 
 app.use('/users', usersRouter);
 app.use('/register', cadastrarUserRouter);
-app.use('/', indexRouter);
+app.use('/palavra', indexRouter);
 
 //Rotas com auth
 var acesso = require('./helpers/acessoApi')
