@@ -4,12 +4,16 @@ const Usuario = require('../models/Usuario')
 module.exports = {
     cadastro: async function(req, res) {
         let {admin, nome, email, senha} = req.body
+
+        if (!admin && !nome && !email && !senha) {
+            return res.status(400).send("Nenhum dado inserido, preencha todos os campos");
+        }
+
         if (!admin) {
             return res.status(400).send("Insira a flag admin");
         }
 
         if (!!admin && (admin !== "true" && admin !== "false")) {
-            console.log("type : ", typeof admin)
             return res.status(400).send("Flag admin deve ser um booleano")
         }
 
